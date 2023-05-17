@@ -7,9 +7,9 @@ require_relative 'deck'
 # ゲーム全体を管理するクラス
 class Game
   def initialize
-    @deck = Deck.new # デッキをインスタンス化する
     @player = Player.new # プレイヤーをインスタンス化する
     @dealer = Dealer.new # ディーラーをインスタンス化する
+    @deck = Deck.new # デッキをインスタンス化する
   end
 
   # ゲームを開始する

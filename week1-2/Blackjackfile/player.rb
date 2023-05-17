@@ -20,10 +20,10 @@ class Player
   # 手札の点数を計算する
   def hand_score
     score = 0
-
-    hand_cards.each do |card|
+    @hand_cards.each do |card|
       score += card.score
     end
+
     # Aを1点あるいは11点のどちらかで扱うようにプログラムを修正。Aはカードの合計値が21以内で最大となる方で数える。
     # ただし、カードの合計値が21を超えてしまう場合は、Aを1点として扱います
     score -= 10 if score > 21 && hand_cards.any? { |card| card.number == 'A' }

@@ -16,7 +16,7 @@
 
 ## 1. データベースの構築
 ## 2. ステップ1で設計したテーブルを構築
-```
+```sql
 CREATE TABLE channels (
     channel_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     channel_name VARCHAR(255) NOT NULL,

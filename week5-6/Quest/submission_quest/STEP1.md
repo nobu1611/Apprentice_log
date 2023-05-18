@@ -1,12 +1,12 @@
-ステップ1
+# ステップ1
 テーブル設計をしてください。
 
 テーブルごとにテーブル名、カラム名、データ型、NULL(NULL OK の場合のみ YES と記載)、キー（キーが存在する場合、PRIMARY/INDEX のどちらかを記載）、初期値（ある場合のみ記載）、AUTO INCREMENT（ある場合のみ YES と記載）を記載してください。また、外部キー制約、ユニークキー制約に関しても記載してください。
 
 その際に、少なくとも次のことは満たしてください。
 
-アプリケーションとして成立すること(プログラムを組んだ際に仕様を満たして動作すること)
-正規化されていること
+- アプリケーションとして成立すること(プログラムを組んだ際に仕様を満たして動作すること)
+- 正規化されていること
 以下、アウトプット例です。
 
 テーブル：users
@@ -73,8 +73,8 @@ email	varchar(100)		INDEX
 テーブル：viewership
 | カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
 |:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
-| viewership_id| BIGINT(20) |             | PRIMARY      |              | YES          |
+| viewership_id| INT |             | PRIMARY      |              | YES          |
 | schedule_id | INT         |              | FOREIGN      |              |              |
-| view_count  | BIGINT(20)  |              |              | 0            |              |
+| view_count  | BIGINT  |              |              | 0            |              |
 
-- 外部キー制約：・schedule_idに対して,program_schedulesテーブルのschedule_idカラムを設定\
+- 外部キー制約：・schedule_idに対して,program_schedulesテーブルのschedule_idカラムを設定

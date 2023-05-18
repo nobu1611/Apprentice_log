@@ -24,16 +24,17 @@ CREATE TABLE channels (
 );
 
 CREATE TABLE time_slots (
-    timeslot_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    timeslot VARCHAR(255) NOT NULL,
-    UNIQUE (timeslot)
+    time_slot_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    time_slot VARCHAR(255) NOT NULL,
+    UNIQUE (time_slot)
 );
 
 CREATE TABLE programs (
     program_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     program_name VARCHAR(255) NOT NULL,
     program_detail TEXT　NOT NULL,
-    genre VARCHAR(255)
+    genre VARCHAR(255),
+    UNIQUE (program_name)
 );
 
 CREATE TABLE episodes (
@@ -50,14 +51,21 @@ CREATE TABLE episodes (
 CREATE TABLE program_schedule (
     schedule_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     channel_id INT NOT NULL,
-    timeslot_id INT NOT NULL,
+    time_slot_id INT NOT NULL,
     program_id INT NOT NULL,
     episode_id INT,
     FOREIGN KEY (channel_id) REFERENCES channels(channel_id),
-    FOREIGN KEY (timeslot_id) REFERENCES time_slots(timeslot_id),
+    FOREIGN KEY (time_slot_id) REFERENCES time_slots(time_slot_id),
     FOREIGN KEY (program_id) REFERENCES programs(program_id),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id),
-    UNIQUE (channel_id, timeslot_id)
+    UNIQUE (channel_id, time_slot_id)
+);
+
+CREATE TABLE viewership (
+  viewership_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  schedule_id INT NOT NULL,
+  view_count BIGINT　DEFAULT 0,
+  FOREIGN KEY (schedule_id) REFERENCES program_schedule(schedule_id),
 );
 ```
 

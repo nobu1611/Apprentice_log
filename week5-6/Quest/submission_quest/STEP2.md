@@ -16,6 +16,7 @@
 
 ## 1. データベースの構築
 ## 2. ステップ1で設計したテーブルを構築
+```
 CREATE TABLE channels (
     channel_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     channel_name VARCHAR(255) NOT NULL,
@@ -58,6 +59,6 @@ CREATE TABLE program_schedule (
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id),
     UNIQUE (channel_id, timeslot_id)
 );
-
+```
 
 ## 3. サンプルデータを入れる

@@ -28,8 +28,50 @@ email	varchar(100)		INDEX
 |   カラム名   |    データ型   |  NULL |   キー  | 初期値 | AUTO INCREMENT |
 |:----------- |------------:|:------:|:------:|:----:|:--------------:|
 | time_slot_id | int         |        | PRIMARY|       | YES            |
-| time_slot    | VARCHAR(255) |        |        |       |                |
-- ユニークキー制約： time_slotカラムに対して設定
+| start_time   | TIME        |        |        |       |                |
+| end_time     | TIME        |        |        |       |                |
+- ユニークキー制約： start_time, end_timeカラムに対して設定
+
+テーブル：genres
+| カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
+|:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
+| genre_id | INT         |              | PRIMARY      |              | YES          |
+| genre_name|VARCHAR(255)|              |              |              |              |
+- ユニークキー制約： genre_nameカラムに対して設定
+
+テーブル:program_genres
+| カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
+|:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
+| program_id | INT         |              | PRIMARY      |              | YES          |
+| genre_id|INT           |              | PRIMARY      |              | YES          |
+外部キー制約：\
+・program_idに対して,programsテーブルのprogram_idカラムを設定\
+・genre_idに対して,genresテーブルのgenre_idカラムを設定
+
+
+テーブル:series
+| カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
+|:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
+| series_id | INT         |              | PRIMARY      |              | YES          |
+| series_name|VARCHAR(255)|              |              |              |              |
+| series_detail| TEXT     |              |              |              |              |
+| program_id | INT         |              | FOREIGN      |              |              |
+外部キー制約：\
+・program_idに対して,programsテーブルのprogram_idカラムを設定
+
+
+
+テーブル：seasons
+| カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
+|:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
+| season_id | INT         |              | PRIMARY      |              | YES          |
+| series_id | INT         |              | FOREIGN      |              |              |
+| season_number| INT       |              |              |              |              |
+| season_name|VARCHAR(255)|              |              |              |              |
+| season_detail| TEXT     |              |              |              |              |
+外部キー制約：\
+・series_idに対して,seriesテーブルのseries_idカラムを設定
+
 
 テーブル：programs
 | カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
@@ -37,44 +79,32 @@ email	varchar(100)		INDEX
 | program_id | INT         |              | PRIMARY      |              | YES          |
 | program_name|VARCHAR(255)|              |              |              |              |
 | program_detail| TEXT     |              |              |              |              |
-| genre      | VARCHAR(255)|              |              |              |              |
 - ユニークキー制約： program_nameカラムに対して設定
+
 
 テーブル：episodes
 | カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
 |:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
 | episode_id | INT         |              | PRIMARY      |              | YES          |
-| program_id | INT         |              | FOREIGN      |              |              |
-| season_number| INT       |              |              |              |              |
-| episode_number| INT      |              |              |              |              |
-| episode_title| VARCHAR(255)|            |              |              |              |
-| episode_detail| TEXT      |             |              |              |              |
-| duration   | TIME        |              |              |              |              |
-| release_date| DATE       |              |              |              |              |
+| season_id | INT         |              | FOREIGN      |              |              |
+| episode_number| INT       |              |              |              |              |
+| title|VARCHAR(255)|              |              |              |              |
+| episode_detail| TEXT     |              |              |              |              |
+| duration| INT     |              |              |              |              |
+| release_date| DATE     |              |              |              |              |
+外部キー制約：\
+・season_idに対して,seasonsテーブルのseason_idカラムを設定
 
-テーブル：program_schedules
+テーブル：program_schedule
 | カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
 |:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
-| schedule_id| INT         |              | PRIMARY      |              | YES          |
+| schedule_id | INT         |              | PRIMARY      |              | YES          |
 | channel_id | INT         |              | FOREIGN      |              |              |
-| time_slot_id| INT        |              | FOREIGN      |              |              |
-| program_id | INT         |              | FOREIGN      |              |              |
-| episode_id | INT         |              | FOREIGN      |              |              |
-
-- ユニークキー制約： channel_idとtime_slot_idの組み合わせのカラムに対して設定
-
-- 外部キー制約：\
+| time_slot_id| INT       |              | FOREIGN      |              |              |
+| episode_id| INT       |              | FOREIGN      |              |              |
+| view_count| BIGINT       |              |              | 0            |              |
+| broadcast_date| DATE       |              |              |              |              |
+外部キー制約：\
 ・channel_idに対して,channelsテーブルのchannel_idカラムを設定\
 ・time_slot_idに対して,time_slotsテーブルのtime_slot_idカラムを設定\
-・program_idに対して,programsテーブルのprogram_idカラムを設定\
-・episode_idに対して,episodesテーブルのepisode_idカラムを設定\
-
-
-テーブル：viewership
-| カラム名 | データ型 | NULL | キー | 初期値 | AUTO INCREMENT |
-|:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
-| viewership_id| INT |             | PRIMARY      |              | YES          |
-| schedule_id | INT         |              | FOREIGN      |              |              |
-| view_count  | BIGINT  |              |              | 0            |              |
-
-- 外部キー制約：・schedule_idに対して,program_schedulesテーブルのschedule_idカラムを設定
+・episode_idに対して,episodesテーブルのepisode_idカラムを設定

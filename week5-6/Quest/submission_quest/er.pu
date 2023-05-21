@@ -1,30 +1,67 @@
-@startuml
+@startuml name
+' スキンパラメータ
+skinparam classAttributeIconSize 0
 
-entity "channels" as e01 {
-+ channel_id [PK]
---
+' チャンネル
+entity "channels" as channels <<チャンネル>> {
+  +channel_id (PK)
+  --
   channel_name
 }
 
-entity "time_slots" as e02 {
-+ timeslot_id [PK]
---
-  timeslot
+' 時間帯
+entity "time_slots" as time_slots <<時間帯>> {
+  +time_slot_id (PK)
+  --
+  start_time
+  end_time
 }
 
-entity "programs" as e03 {
-+ program_id [PK]
---
+' ジャンル
+entity "genres" as genres <<ジャンル>> {
+  +genre_id (PK)
+  --
+  genre_name
+}
+
+' 番組ジャンル
+entity "program_genres" as program_genres <<番組ジャンル>> {
+  +program_id (PK, FK1)
+  +genre_id (PK, FK2)
+}
+
+' シリーズ
+entity "series" as series <<シリーズ>> {
+  +series_id (PK)
+  --
+  series_name
+  series_detail
+  +program_id (FK1)
+}
+
+' シーズン
+entity "seasons" as seasons <<シーズン>> {
+  +season_id (PK)
+  --
+  +series_id (FK1)
+  season_number
+  season_name
+  season_detail
+}
+
+' 番組
+entity "programs" as programs <<番組>> {
+  +program_id (PK)
+  --
   program_name
   program_detail
-  genre
 }
 
-entity "episodes" as e04 {
-+ episode_id [PK]
---
-  program_id [FK]
-  seasonn_number
+' エピソード
+entity "episodes" as episodes <<エピソード>> {
+  +episode_id (PK)
+  --
+  +season_id (FK1)
   episode_number
   episode_title
   episode_detail
@@ -32,28 +69,27 @@ entity "episodes" as e04 {
   release_date
 }
 
-entity "program_schedule" as e05 {
-+ schedule_id [PK]
---
-  channel_id [FK]
-  timeslot_id [FK]
-  program_id [FK]
-  episode_id [FK]
+' 番組表
+entity "program_schedule" as program_schedule <<番組表>> {
+  +schedule_id (PK)
+  --
+  +channel_id (FK1)
+  +time_slot_id (FK2)
+  +episode_id (FK3)
+  view_count
+  broadcast_date
 }
 
-entity "viewer_ship" as e06 {
-+  viewership_id [PK]
---
-  schedule_id [FK]
-  viewcount
-}
+' リレーションシップ
+channels ||--o{ program_schedule : FK1
+time_slots ||--o{ program_schedule : FK2
+episodes ||--o{ program_schedule : FK3
 
-e03 ||-|{ e04
-e03 ||-l-|{ e05
-e05 ||-r-|{ e06
-e01 ||-d-|{ e05
-e02 ||-|{ e05
-e04 ||-d-|{e05
+programs ||--o{ program_genres : FK1
+genres ||--o{ program_genres : FK2
 
+programs ||--o{ series : FK1
+series ||--o{ seasons : FK1
+seasons ||--o{ episodes : FK1
 
 @enduml

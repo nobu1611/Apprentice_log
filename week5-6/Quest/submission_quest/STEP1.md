@@ -44,7 +44,7 @@ email	varchar(100)		INDEX
 |:-----------|------------:|:------------:|:------------:|:------------:|:------------:|
 | program_id | INT         |              | PRIMARY      |              | YES          |
 | genre_id|INT           |              | PRIMARY      |              | YES          |
-外部キー制約：\
+- 外部キー制約：\
 ・program_idに対して,programsテーブルのprogram_idカラムを設定\
 ・genre_idに対して,genresテーブルのgenre_idカラムを設定
 
@@ -56,7 +56,7 @@ email	varchar(100)		INDEX
 | series_name|VARCHAR(255)|              |              |              |              |
 | series_detail| TEXT     |              |              |              |              |
 | program_id | INT         |              | FOREIGN      |              |              |
-外部キー制約：\
+- 外部キー制約：\
 ・program_idに対して,programsテーブルのprogram_idカラムを設定
 
 
@@ -69,7 +69,7 @@ email	varchar(100)		INDEX
 | season_number| INT       |              |              |              |              |
 | season_name|VARCHAR(255)|              |              |              |              |
 | season_detail| TEXT     |              |              |              |              |
-外部キー制約：\
+- 外部キー制約：\
 ・series_idに対して,seriesテーブルのseries_idカラムを設定
 
 
@@ -92,7 +92,7 @@ email	varchar(100)		INDEX
 | episode_detail| TEXT     |              |              |              |              |
 | duration| INT     |              |              |              |              |
 | release_date| DATE     |              |              |              |              |
-外部キー制約：\
+- 外部キー制約：\
 ・season_idに対して,seasonsテーブルのseason_idカラムを設定
 
 テーブル：program_schedule
@@ -104,7 +104,7 @@ email	varchar(100)		INDEX
 | episode_id| INT       |              | FOREIGN      |              |              |
 | view_count| BIGINT       |              |              | 0            |              |
 | broadcast_date| DATE       |              |              |              |              |
-外部キー制約：\
+- 外部キー制約：\
 ・channel_idに対して,channelsテーブルのchannel_idカラムを設定\
 ・time_slot_idに対して,time_slotsテーブルのtime_slot_idカラムを設定\
 ・episode_idに対して,episodesテーブルのepisode_idカラムを設定

@@ -21,22 +21,22 @@ Homebrewを使用してMySQLをインストールします。ターミナルで�
 brew install mysql
 ```
 \
-MySQLをインストールしてください。
+MySQLサーバーの起動
 ```sql
 mysql.server start
 ```
 \
-ユーザー名：practiceでログインしてください
+ユーザー名：practiceでログイン
 ```sql
 mysql -u practice -p
 ```
 \
-データベースを作成してください
+データベースを作成
 ```sql
 CREATE DATABASE internet_tv;
 ```
 \
-データベースを選択してください
+データベースを選択
 ```sql
 USE internet_tv;
 ```

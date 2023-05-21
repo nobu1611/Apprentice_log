@@ -73,13 +73,13 @@ SELECT
     e.episode_detail
 FROM
     program_schedule ps
-JOIN
+INNER JOIN
     time_slots ts ON ps.time_slot_id = ts.time_slot_id
-JOIN
+INNER JOIN
     channels ch ON ps.channel_id = ch.channel_id
-JOIN
+INNER JOIN
     episodes e ON ps.episode_id = e.episode_id
-JOIN
+INNER JOIN
     seasons s ON e.season_id = s.season_id
 WHERE
     ch.channel_name = 'ドラマチャンネル' AND

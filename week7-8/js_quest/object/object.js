@@ -15,9 +15,6 @@ printBooks(books)
 
 
 // ユーザーパーミッションチェッカー
-function checkPermission(username, permission) {
-  
-}
 
 // ユーザー配列定義
 let users = [
@@ -48,5 +45,56 @@ let users = [
   // ユーザーを追加してください
 ];
 
-console.log(users[0].permissions.canRead);
-// checkPermission('山田', 'canWrite')
+function checkPermission(username, permission) {
+  const user = users.find(user => user.username === username);
+
+  if ( user.username == username ) {
+    if ( user.permissions[permission] ) {
+      console.log(true);
+    } else if ( !user.permissions[permission] ) {
+      console.log(false);
+    }
+  }
+}
+
+// console.log(users[0].permissions.canRead);
+checkPermission('山田', 'canWrite')
+checkPermission('兵後', 'canWrite')
+checkPermission('佐藤', 'canDelete')
+
+// メソッド
+// １　正しい
+// const obj = {
+//   method: function () {
+//     console.log('method');
+//   },
+// }
+
+// obj.method();
+
+// ２　正しい
+// const obj = {
+//   method: () => {
+//     console.log('method');
+//   },
+// }
+
+// obj.method();
+
+// ３　正しい
+// const obj = {
+//   method() {
+//     console.log('method');
+//   },
+// }
+
+// obj.method();
+
+// ４　誤り
+// const obj = {
+//   () => {
+//   console.log('method');
+// },
+// }
+
+// obj.method();

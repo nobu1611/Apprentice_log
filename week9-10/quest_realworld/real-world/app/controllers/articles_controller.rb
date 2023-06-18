@@ -2,7 +2,6 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.slug = generate_slug(@article.title)
-
     if @article.save
       render json: { article: @article.as_json(except: :id) }, status: 201
     else
@@ -12,7 +11,6 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(slug: params[:slug])
-
     if @article
       render json: { article: @article.as_json(except: :id) }, status: 200
     else
@@ -22,9 +20,9 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find_by(slug: params[:slug])
-
     if @article
       @article.slug = generate_slug(article_params[:title]) # タイトルの変更に応じてslugを更新
+      # @article.slug = generate_slug((@artickle.title)
       if @article.update(article_params)
         render json: { article: @article.as_json(except: :id) }, status: :ok
       else
@@ -37,7 +35,6 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find_by(slug: params[:slug])
-
     if @article
       @article.destroy
       head :no_content

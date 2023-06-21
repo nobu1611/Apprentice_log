@@ -3,33 +3,32 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.slug = generate_slug(@article.title)
     if @article.save
-      render json: { article: @article.as_json(except: :id) }, status: 201
+      render json: { article: @article.as_json(except: :id) }, status: :created
     else
-      render json: { errors: @article.errors }, status: 422
+      render json: { errors: 'Not found' }, status: :unprocessable_entity
     end
   end
 
   def show
     @article = Article.find_by(slug: params[:slug])
     if @article
-      render json: { article: @article.as_json(except: :id) }, status: 200
+      render json: { article: @article.as_json(except: :id) }, status: :ok
     else
-      render json: { errors: { slug: ["can't be found"] } }, status: 404
+      render json: { errors: 'Not found' }, status: :not_found
     end
   end
 
   def update
     @article = Article.find_by(slug: params[:slug])
     if @article
-      @article.slug = generate_slug(article_params[:title]) # タイトルの変更に応じてslugを更新
-      # @article.slug = generate_slug((@artickle.title)
+      # @article.slug = generate_slug(article_params[:title]) # タイトルの変更に応じてslugを更新
       if @article.update(article_params)
         render json: { article: @article.as_json(except: :id) }, status: :ok
       else
         render json: { errors: @article.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { errors: { slug: ["can't be found"] } }, status: :not_found
+      render json: { errors: 'Not found' }, status: :not_found
     end
   end
 
@@ -39,7 +38,7 @@ class ArticlesController < ApplicationController
       @article.destroy
       head :no_content
     else
-      render json: { errors: { slug: ["can't be found"] } }, status: :not_found
+      render json: { errors: 'Not found' }, status: :not_found
     end
   end
 

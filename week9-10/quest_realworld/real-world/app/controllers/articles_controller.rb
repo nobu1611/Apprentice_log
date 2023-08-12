@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find_by(slug: params[:slug])
     if @article
-      # @article.slug = generate_slug(article_params[:title]) # タイトルの変更に応じてslugを更新
+      @article.slug = generate_slug(article_params[:title]) # タイトルの変更に応じてslugを更新
       if @article.update(article_params)
         render json: { article: @article.as_json(except: :id) }, status: :ok
       else
